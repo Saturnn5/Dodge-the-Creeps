@@ -5,6 +5,7 @@ signal hit
 @export var speed = 400
 var screen_size
 var player_size
+var temp
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
