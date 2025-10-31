@@ -6,12 +6,12 @@ signal hit
 var screen_size
 var player_size
 
-func _ready() -> void:
+func _ready():
 	screen_size = get_viewport_rect().size
 	player_size = Vector2($CollisionShape2D.shape.radius, $CollisionShape2D.shape.height / 2)
-	#hide()
+	hide()
 
-func _process(delta: float) -> void:
+func _process(delta: float):
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
@@ -43,7 +43,10 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D):
-	pass # Replace with function body.
+	hide()
+	hit.emit()
+	# Must be deferred: physics properties can't be modified on a physics callback
+	$CollisionShape2D.set_deferred("disabled", true)
 
 func start(pos):
 	position = pos

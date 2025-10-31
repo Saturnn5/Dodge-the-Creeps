@@ -3,18 +3,30 @@ extends Node
 @export var mob_scene: PackedScene
 
 var score
-
-func _ready() -> void:
-	new_game()
+var mobs
 
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$Player.hide()
+	
+	$HUD.show_game_over()
 
 func new_game():
 	score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
+	
+	for mob in get_tree().get_nodes_in_group("mobs"):
+		mob.queue_free()
+	# Waits for the frame to end so that mobs are properly deleted.
+	# Not quite sure why this is necessary... Isn't added in tutorial.
+	await get_tree().process_frame
+	
+	# HUD stuff
+	$HUD.update_score(score)
+	$HUD/ScoreLabel.show()
+	$HUD.show_message("Creeps incoming!")
 
 func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()
@@ -41,7 +53,10 @@ func _on_mob_timer_timeout():
 
 func _on_score_timer_timeout():
 	score += 1
+	$HUD.update_score(score)
 
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	
+	$HUD/Message.hide()
