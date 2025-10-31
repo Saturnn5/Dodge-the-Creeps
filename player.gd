@@ -42,5 +42,10 @@ func _process(delta: float) -> void:
 	position = position.clamp(Vector2.ZERO + player_size, screen_size - player_size)
 
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(body: Node2D):
 	pass # Replace with function body.
+
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
