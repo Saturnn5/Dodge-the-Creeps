@@ -9,8 +9,9 @@ func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$Player.hide()
-	
 	$HUD.show_game_over()
+	$Music.stop()
+	$DeathSound.play()
 
 func new_game():
 	score = 0
@@ -27,6 +28,8 @@ func new_game():
 	$HUD.update_score(score)
 	$HUD/ScoreLabel.show()
 	$HUD.show_message("Creeps incoming!")
+	
+	$Music.play()
 
 func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()

@@ -25,6 +25,13 @@ func update_score(score):
 	$ScoreLabel.text = str(score)
 
 func _on_start_button_button_down():
+	start_button_logic()
+
+func _input(event):
+	if event.is_action_pressed("ui_accept"):
+		start_button_logic()
+
+func start_button_logic():
 	$StartButton.hide()
 	start_game.emit()
 
