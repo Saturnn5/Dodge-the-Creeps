@@ -36,4 +36,4 @@ func start_button_logic():
 	start_game.emit()
 
 func _on_message_timer_timeout():
-	$Message.hide
+	$Message.hide()
